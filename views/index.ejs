@@ -32,7 +32,11 @@
 
 
 <!-- basicAuth -->
-
+<%  if(locals.notif) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= notif %> </p>
+  </div>
+ <%  } %>
 
 
  <%  if (locals.condition) { %>
@@ -52,7 +56,7 @@
         <input  class="form-control border-3" type="password" name="password" id="pswd" style="border-color: #2ecc71 !important;">
       </div>
       <div class="container-fluid d-flex justify-content-center py-4">
-        <input type="submit" value="Login" class="btn px-5 py-2 fw-bolder" style="background-color: #2ecc71;">
+        <input type="submit" value="Select" class="btn px-5 py-2 fw-bolder" style="background-color: #2ecc71;">
       </div>
     </form>
   </div>
@@ -81,11 +85,7 @@
 
 
 <!-- apikey -->
-<%  if(locals.notif) {  %>
-  <div class="notif">
-    <p class="fw-bolder text-danger fs-5"><%= notif %> </p>
-  </div>
- <%  } %>
+
 
 <% if (locals.show) {  %>
   <div class="w-50">
@@ -203,7 +203,7 @@
         <input class="form-control border-3 border-danger" type="text" name="token2" id="token">
       </div>
       <div class="container-fluid d-flex justify-content-center py-4">
-        <input type="submit"  value="Select" class="btn btn-danger px-5 py-2 fw-bolder "  >
+        <input type="submit"  value="Add" class="btn btn-danger px-5 py-2 fw-bolder "  >
       </div>
     </form>
   </div>
