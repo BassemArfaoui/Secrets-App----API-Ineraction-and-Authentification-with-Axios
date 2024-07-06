@@ -1,0 +1,40 @@
+<%- include('includes/header.ejs') %>
+    
+
+<div class="toekn w-50">
+    <div class="title">
+    <div class="title text-center mt-5"><h1 class="fw-bold text-primary mt-5" >Generate Bearer Token</h1></div>
+    </div>
+
+    <div class="result mt-4 text-center">
+      <%   if (locals.result_error) {  %>
+          <p class="fw-bolder text-danger fs-5"> <%= result_error %> <p>
+              <%   } %>
+
+  </div>
+
+
+    <form action="/token" method="post" autocomplete="off">
+      <div class="mb-2">
+        <label for="username" class="my-2 fw-bold">Username :</label>
+        <input class="form-control " type="text" name="username" id="username" autocomplete="off">
+      </div>
+      <div>
+        <label for="password" class="my-2 fw-bold">Password :</label>
+        <input  class="form-control" type="password" name="password" id="password">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit" name="token" value="Generate Token" class="btn px-5 py-2 fw-bolder btn-primary" >
+      </div>
+    </form>
+    <div class="result mt-4 text-center">
+      <%   if (locals.result) {  %>
+          <p class="fw-bolder text-dark fs-5"> <%= result %> <p>
+              <%   } %>
+
+  </div>
+  </div>
+
+
+</body>
+</html>

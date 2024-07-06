@@ -1,0 +1,315 @@
+
+
+<%- include('includes/header.ejs') %>
+
+<h1 class="text-center fw-bold mb-4">API Services :</h1>
+<div class="buttons d-flex gap-4 flex-wrap justify-content-center mb-4">
+  <button class="rounded-3 text-dark fw-bold small" type="submit" id="noAuth" onclick="window.location.href='/noAuth'">Random Secret (No Auth)</button>
+  <button class="rounded-3 text-dark fw-bold small" id="basicAuth" onclick="window.location.href='/basicAuth'">Choose Page (Basic Auth)</button>
+  <button class="rounded-3 text-dark fw-bold small" id="apiKey" onclick="window.location.href='/apiKey'">Filter Secrets (API Key)</button>
+  <button class="rounded-3 text-dark fw-bold small bg-danger" id="bearerToken" onclick="window.location.href='/bearerToken'" >Extra Services (Bearer Token)</button>
+</div>
+
+
+
+
+<!-- noAuth -->
+<% if (locals.content) {  %>
+  <p class="text-secondary m-0 mt-4 fw-bolder">Random Secret :</p>
+  <div class="response-area w-50 rounded-4">
+    <h4 class="text-center p-3 fw-bolder"><%= content.secret %></h4>
+    <div class="d-flex justify-content-between mt-5 px-3">
+      <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+content.username %></h5>
+      <h5 class="text-secondary fw-bold"><%= 'EmScore: '+content.emScore %></h5>
+    </div>
+  </div>
+ <% } else if (locals.error) {%>
+  <p class="fw-bolder text-danger fs-5"><%= error %></p>
+ <%  } %>
+
+
+
+
+
+<!-- basicAuth -->
+
+
+
+ <%  if (locals.condition) { %>
+
+  <div class="form  w-50">
+    <form action="/basicAuth" method="post" autocomplete="off">
+      <div class="mb-2">
+        <label for="page" class="my-2 fw-bold">Selected Page :</label>
+        <input class="form-control border-3" type="number" name="page" id="page" style="border-color: #2ecc71 !important;">
+      </div>
+      <div class="mb-2">
+        <label for="usr" class="my-2 fw-bold">Username :</label>
+        <input class="form-control border-3" type="text" name="username" id="usr" style="border-color: #2ecc71 !important;">
+      </div>
+      <div>
+        <label for="pswd" class="my-2 fw-bold">Password :</label>
+        <input  class="form-control border-3" type="password" name="password" id="pswd" style="border-color: #2ecc71 !important;">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit" value="Login" class="btn px-5 py-2 fw-bolder" style="background-color: #2ecc71;">
+      </div>
+    </form>
+  </div>
+  
+  <%  } %>
+
+
+<% if(locals.secrets) { %>
+  <%  if(locals.page){ %>
+    <p class="text-secondary m-0 mt-4 fw-bolder"><%= 'Page: '+page %></p>
+  <%  }  %>
+  <div class=" container-fluid d-flex flex-column justify-content-center align-items-center">
+    <% secrets.forEach((secret)=>{ %>
+      <div class="response-area w-50 rounded-4 mb-3">
+        <h4 class="text-center p-3 fw-bolder"><%= secret.secret %></h4>
+        <div class="d-flex justify-content-between mt-5 px-3">
+          <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+ secret.username %></h5>
+          <h5 class="text-secondary fw-bold"><%= 'EmScore: '+ secret.emScore %></h5>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+
+
+
+<!-- apikey -->
+<%  if(locals.notif) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= notif %> </p>
+  </div>
+ <%  } %>
+
+<% if (locals.show) {  %>
+  <div class="w-50">
+    <form action="/apikey " method="post" >
+      <div class="mb-2">
+        <label for="level" class="my-2 fw-bold">Minimum Embarassment Score:</label>
+        <input class="form-control border-3" type="number" name="level" id="level" style="border-color:#f1c40f !important;" autocomplete="off">
+      </div>
+      <div class="mb-2">
+        <label for="apikey" class="my-2 fw-bold">API key :</label>
+        <input class="form-control border-3" type="text" name="apikey" id="apikey" style="border-color: #f1c40f !important;">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit" name="filter" value="Filter" class="btn px-5 py-2 fw-bolder " style="background-color: #f1c40f;" >
+      </div>
+    </form>
+  </div>
+<% }  %>
+
+
+
+<% if(locals.output) { %>
+  <%  if(locals.score){ %>
+    <p class="text-secondary m-0 mt-4 fw-bolder"><%= 'Minimum Embarrasment Score: '+score%></p>
+  <%  }  %>
+  <div class=" container-fluid d-flex flex-column justify-content-center align-items-center">
+    <% output.forEach((secret)=>{ %>
+      <div class="response-area w-50 rounded-4 mb-3">
+        <h4 class="text-center p-3 fw-bolder"><%= secret.secret %></h4>
+        <div class="d-flex justify-content-between mt-5 px-3">
+          <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+ secret.username %></h5>
+          <h5 class="text-secondary fw-bold"><%= 'EmScore: '+ secret.emScore %></h5>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+
+
+<!-- Bearer Token -->
+<% if(locals.show_buttons) { %>
+  <div class="container-fluid mt-3">
+    <form action="/bearerToken" method="POST" class="btns d-flex flex-column align-items-center">
+      <button type="submit" name="btns" value="ID" class=" btn btn-danger px-5 py-2 fw-bold" style="height: 52px; width: 250px;">Choose By ID</button>
+      <button type="submit" name="btns" value="add"  class=" btn btn-danger px-5  py-2 fw-bold" style="height: 52px;width: 250px;">Add a Secret</button>
+      <button type="submit" name="btns" value="put"  class=" btn btn-danger px-5  py-2 fw-bold" style="height: 52px;width: 250px;">Edit a secret</button>
+      <button type="submit" name="btns" value="delete"  class="btn btn-danger small px-5  py-2 fw-bold" style="height: 52px;width: 250px;">Delete a Secret</button>
+    </form>
+  </div>
+<% } %>
+
+
+
+<%  if(locals.id_error) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= id_error%> </p>
+  </div>
+ <%  } %>
+<% if(locals.show_id) { %>
+  <div class="container-fluid mt-3 ">
+    <form action="/bearerToken" method="POST" class="btns d-flex flex-column align-items-center">
+      <div class="mb-2 w-50" >
+        <label for="id" class="my-2 fw-bold">Secret ID :</label>
+        <input class="form-control border-3 border-danger" type="number" name="id" id="id">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="token" class="my-2 fw-bold">Bearer Token :</label>
+        <input class="form-control border-3 border-danger" type="text" name="token" id="token">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit"  value="Select" class="btn btn-danger px-5 py-2 fw-bolder "  >
+      </div>
+    </form>
+  </div>
+<% } %>
+
+
+<% if (locals.result_id) {  %>
+ <%   if(locals.id) { %>
+  <p class="text-secondary m-0 mt-4 fw-bolder"><%= 'Secret ID: '+id %></p>
+ <%  } %>
+  <div class="response-area w-50 rounded-4">
+    <h4 class="text-center p-3 fw-bolder"><%= result_id.secret %></h4>
+    <div class="d-flex justify-content-between mt-5 px-3">
+      <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+result_id.username %></h5>
+      <h5 class="text-secondary fw-bold"><%= 'EmScore: '+result_id.emScore %></h5>
+    </div>
+  </div>
+ <% } %>
+
+
+ <%  if(locals.add_error) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= add_error%> </p>
+  </div>
+ <%  } %>
+
+
+
+
+ <%  if(locals.show_add) {  %>
+  <div class="container-fluid mt-2 ">
+    <form action="/bearerToken" method="POST" class="btns d-flex flex-column align-items-center">
+      <div class="mb-2 w-50" >
+        <label for="secret" class="my-2 fw-bold">Secret :</label>
+        <input class="form-control border-3 border-danger" type="text" name="secret" id="secret">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="score" class="my-2 fw-bold">Embarrassment Score :</label>
+        <input class="form-control border-3 border-danger" type="number" name="score" id="score">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="token" class="my-2 fw-bold">Bearer Token :</label>
+        <input class="form-control border-3 border-danger" type="text" name="token2" id="token">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit"  value="Select" class="btn btn-danger px-5 py-2 fw-bolder "  >
+      </div>
+    </form>
+  </div>
+<% } %>
+
+<%  if(locals.add_message) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-success fs-5"><%= add_message%> </p>
+  </div>
+ <%  } %>
+
+<% if (locals.added_secret) {  %>
+  <p class="text-secondary m-0 mt-4 fw-bolder"><%= 'Secret ID: '+added_secret.id %></p>
+  <div class="response-area w-50 rounded-4">
+    <h4 class="text-center p-3 fw-bolder"><%= added_secret.secret %></h4>
+    <div class="d-flex justify-content-between mt-5 px-3">
+      <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+added_secret.username %></h5>
+      <h5 class="text-secondary fw-bold"><%= 'EmScore: '+added_secret.emScore %></h5>
+    </div>
+  </div>
+ <% } %>
+
+
+ <%  if(locals.put_error) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= put_error%> </p>
+  </div>
+ <%  } %>
+
+ <%  if(locals.show_put) {  %>
+  <div class="container-fluid mt-2 ">
+    <form action="/bearerToken" method="POST" class="btns d-flex flex-column align-items-center">
+      <div class="mb-2 w-50" >
+        <label for="Id" class="my-2 fw-bold">Secret ID :</label>
+        <input class="form-control border-3 border-danger" type="number" name="put_id" id="Id">
+      </div>
+      <div class="mb-2 w-50" >
+        <label for="secret" class="my-2 fw-bold">Secret :</label>
+        <input class="form-control border-3 border-danger" type="text" name="put_secret" id="secret">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="score" class="my-2 fw-bold">Embarrassment Score :</label>
+        <input class="form-control border-3 border-danger" type="number" name="put_score" id="score">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="token" class="my-2 fw-bold">Bearer Token :</label>
+        <input class="form-control border-3 border-danger" type="text" name="put_token" id="token">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit"  value="Edit" class="btn btn-danger px-5 py-2 fw-bolder "  >
+      </div>
+    </form>
+  </div>
+<% } %>
+
+
+<%  if(locals.put_message) { %>
+  <div class="notif">
+    <p class="fw-bolder text-success fs-5"><%= put_message%> </p>
+  </div>
+ <%  } %>
+
+<% if (locals.puted_secret) {  %>
+  <p class="text-secondary m-0 mt-4 fw-bolder"><%= 'Secret ID: '+puted_secret.id %></p>
+  <div class="response-area w-50 rounded-4">
+    <h4 class="text-center p-3 fw-bolder"><%= puted_secret.secret %></h4>
+    <div class="d-flex justify-content-between mt-5 px-3">
+      <h5 class="text-secondary fw-bold"  ><%= 'Publisher: '+puted_secret.username %></h5>
+      <h5 class="text-secondary fw-bold"><%= 'EmScore: '+puted_secret.emScore %></h5>
+    </div>
+  </div>
+ <% } %>
+
+
+
+ <%  if(locals.delete_error) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-danger fs-5"><%= delete_error%> </p>
+  </div>
+ <%  } %>
+
+ <%  if(locals.delete_message) {  %>
+  <div class="notif">
+    <p class="fw-bolder text-success fs-5"><%= delete_message%> </p>
+  </div>
+ <%  } %>
+<% if(locals.show_delete) { %>
+  <div class="container-fluid mt-3 ">
+    <form action="/bearerToken" method="POST" class="btns d-flex flex-column align-items-center">
+      <div class="mb-2 w-50" >
+        <label for="id" class="my-2 fw-bold">Secret ID :</label>
+        <input class="form-control border-3 border-danger" type="number" name="delete_id" id="id">
+      </div>
+      <div class="mb-2 w-50">
+        <label for="token" class="my-2 fw-bold">Bearer Token :</label>
+        <input class="form-control border-3 border-danger" type="text" name="delete_token" id="token">
+      </div>
+      <div class="container-fluid d-flex justify-content-center py-4">
+        <input type="submit"  value="Delete" class="btn btn-danger px-5 py-2 fw-bolder "  >
+      </div>
+    </form>
+  </div>
+<% } %>
+
+ 
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<%- include('includes/header.ejs') %>
+
+<div class="api-key d-flex flex-column  align-items-center">
+    <div class="title text-center mt-5"><h1 class="fw-bold text-primary mt-5" >Generate API Key</h1></div>
+
+    <form action="/generate" method="POST" class="mt-2">
+        <input type="submit" name="generate" value="Generate"  class="btn px-5 py-2 fw-bolder btn-primary ">
+    </form>
+
+    <div class="result mt-4">
+        <%   if (locals.message) {  %>
+            <p class="fw-bolder text-dark fs-5"> <%= message %> <p>
+                <%   } %>
+
+    </div>
+
+</div>
+    
+</body>
+</html>

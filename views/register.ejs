@@ -1,0 +1,36 @@
+
+
+<%- include('includes/header.ejs') %>
+
+
+<div class="form  w-50 mt-5">
+  <div class="title text-center mb-3"><h1 class="fw-bold text-primary" >Register</h1></div>
+  <%  if(locals.data) {  %>
+    <div class="info text-center my-2 mb-5"><p class="fw-bolder text-success  fs-5"><%= data %> </p></div>
+    <%  }  else if(locals.data_error) {%>
+      <div class="info text-center my-2 mb-5"><p class="fw-bolder text-danger  fs-5"><%= data_error+' !'  %> </p></div>
+    <% } %>
+  <form action="/register" method="post" autocomplete="off">
+    <div class="mb-2">
+      <label for="username" class="my-2 fw-bold">Username :</label>
+      <input class="form-control " type="text" name="username" id="username" autocomplete="off">
+    </div>
+    <div>
+      <label for="password" class="my-2 fw-bold">Password :</label>
+      <input  class="form-control" type="text" name="password" id="password">
+    </div>
+    <div class="container-fluid d-flex justify-content-center py-4">
+      <input type="submit" name="register" value="Register" class="btn px-5 py-2 fw-bolder btn-primary" >
+    </div>
+  </form>
+ 
+</div>
+
+    
+        
+
+
+    
+    
+</body>
+</html>
