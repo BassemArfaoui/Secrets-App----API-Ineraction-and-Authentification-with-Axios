@@ -29,7 +29,7 @@ Secrets App is a Node.js web application built with Express.js and Axios, demons
 
 2. Navigate to the project directory:
    ```bash
-   cd secrets-app
+   cd Secrets-Web-App----API-Ineraction-and-Authentification-with-Axios/
    ```
 
 3. Install the dependencies:
